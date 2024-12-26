@@ -1,0 +1,24 @@
+﻿@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+
+
+<h1> @message </h1>
+
+@code {
+    string message = "";
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+        }
+        else
+        {
+            message = "You are ot authorized to access this page, please login first";   
+        }
+    }
+}

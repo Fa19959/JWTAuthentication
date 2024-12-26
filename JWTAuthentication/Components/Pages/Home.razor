@@ -1,0 +1,13 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <h1>Welcome you have just logged in successfully</h1>
+    </Authorized>
+    <NotAuthorized>
+
+        <RedirectToLogin />
+
+    </NotAuthorized>
+</AuthorizeView>

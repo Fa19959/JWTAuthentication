@@ -1,0 +1,55 @@
+﻿@page "/login"
+@inject AuthenticationStateProvider stateProvider
+@inject NavigationManager Navigation
+
+@using System.Net.Http.Json
+
+<h3>Login</h3>
+
+
+
+<EditForm Model="person" method="post" FormName="CreatePersonForm" OnValidSubmit="HandleLogin">
+
+    <div>
+        <label> First Name</label>
+        <InputText @bind-Value="person.Name" />
+    </div>
+
+    <br />
+
+    <div>
+        <label> Last Name</label>
+        <InputText @bind-Value="person.Password" />
+    </div>
+
+    <br />
+
+    <button class="btn btn-outline-primary" type="submit"> Login </button>
+
+</EditForm>
+
+
+@code 
+{
+
+
+
+
+    private PersonModel person = new();
+
+
+    JWTToken token = new JWTToken();
+
+    private async Task HandleLogin()
+    {
+        var response = token.generateToken(person);
+
+
+        ((CustomAuthenticationStateProvider)stateProvider).MarkUserAsAuthenticated(response.Token);
+        Navigation.NavigateTo("/");
+
+     }
+
+
+
+}
